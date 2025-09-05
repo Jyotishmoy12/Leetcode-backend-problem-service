@@ -56,6 +56,14 @@ const problemSchema = new mongoose.Schema<IProblem>(
   },
   {
     timestamps: true,
+    toJSON:{
+      transform:(_, record)=>{
+        delete (record as any).__v;
+        record.id = record._id;
+        delete record._id;
+        return record
+      }
+    }
   }
 );
 
