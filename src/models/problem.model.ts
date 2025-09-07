@@ -12,7 +12,7 @@ export interface IProblem extends Document {
   createdAt: Date;
   updatedAt: Date;
   editorial?: string;
-  testCases: ITestCase[];
+  testcases: ITestCase[];
 }
 
 const testSchema = new mongoose.Schema<ITestCase>({
@@ -52,7 +52,7 @@ const problemSchema = new mongoose.Schema<IProblem>(
       type: String,
       trim: true,
     },
-    testCases: [testSchema],
+    testcases: [testSchema],
   },
   {
     timestamps: true,
