@@ -1,153 +1,226 @@
-# LeetCode Clone
+# 🚀 CodeJudge - LeetCode Clone
 
-A full-stack coding platform that allows users to solve algorithmic problems and get real-time code evaluation in multiple programming languages.
+> A production-ready, full-stack coding platform that enables users to solve algorithmic problems with real-time code evaluation across multiple programming languages.
 
-## System Design 
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Required-blue.svg)](https://www.docker.com/)
+[![Redis](https://img.shields.io/badge/Redis-Queue-red.svg)](https://redis.io/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Database-green.svg)](https://www.mongodb.com/)
 
-<img width="1078" height="796" alt="design" src="https://github.com/user-attachments/assets/ce239267-63c5-412b-92d2-bfaca3ade153" />
+## 📋 Table of Contents
 
+- [Overview](#-overview)
+- [System Architecture](#-system-architecture)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [API Documentation](#-api-documentation)
 
-## System Architecture
+## 🌟 Overview
 
-This system consists of three main services that work together to handle code problem creation, submission, and evaluation:
+Leetcode is a scalable, microservices-based coding platform backend. It features secure code execution in isolated Docker containers, real-time evaluation, and comprehensive problem management capabilities.
 
-### Service Flow
+### Key Highlights
 
-1. **Problem Service** - Creates and manages coding problems
-2. **Submission Service** - Handles code submissions from users ( link: https://github.com/Jyotishmoy12/Leetcode-backend-submission-service)
-3. **Evaluation Service** - Processes and evaluates submitted code ( link: https://github.com/Jyotishmoy12/Leetcode-backend-evaluation-service)
+- **🔐 Secure Execution**: Code runs in isolated Docker containers with resource limits
+- **⚡ Real-time Processing**: Asynchronous evaluation using Redis queues
+- **🎯 Multi-language Support**: Python and C++ with optimized timeouts
+- **📊 Comprehensive Results**: Detailed test case evaluation with standard judge responses
+- **🏗️ Scalable Architecture**: Clean microservices design for easy scaling
+
+## 🏛️ System Architecture
+
+<img width="1078" height="796" alt="System Architecture Diagram" src="https://github.com/user-attachments/assets/ce239267-63c5-412b-92d2-bfaca3ade153" />
+
+### Service Overview
+
+Our system consists of three core microservices working in harmony:
+
+| Service | Port | Responsibility | Repository |
+|---------|------|----------------|------------|
+| **Problem Service** | 3000 | Problem CRUD operations, search & filtering | *Current Repository* |
+| **Submission Service** | 3001 | Handle code submissions, queue management | [🔗 View Repository](https://github.com/Jyotishmoy12/Leetcode-backend-submission-service) |
+| **Evaluation Service** | 3002 | Code execution, result processing | [🔗 View Repository](https://github.com/Jyotishmoy12/Leetcode-backend-evaluation-service) |
 
 ### Evaluation Pipeline
 
-When a code submission is made, the following process occurs:
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant S as Submission Service
+    participant R as Redis Queue
+    participant E as Evaluation Service
+    participant D as Docker Container
 
-1. The **Submission Service** queues the submission using **Redis** for asynchronous processing
-2. The **Evaluation Service** pulls the submission from the Redis queue
-3. Based on the programming language (for our case it's C++ and Python) , the appropriate **Docker image** is pulled
-4. A new **Docker container** is created from the pulled image
-5. The submitted code is executed inside the isolated container environment
-6. Results are processed with proper input output correctness and then returned
-
-### Technology Stack
-
-- **Redis**: Message queue for handling submission requests
-- **Docker**: Containerization for secure code execution
-- **Multi-language support**: Dynamic Docker image selection based on programming language
+    U->>S: Submit Code
+    S->>R: Queue Submission
+    S->>U: Return Submission ID
+    
+    E->>R: Pull Submission
+    E->>D: Create Container
+    E->>D: Execute Code
+    D->>E: Return Results
+    E->>S: Update Status
+    
+    U->>S: Check Status
+    S->>U: Return Results
+```
 
 ## ✨ Features
 
-### Problem Management
+### 🎯 Problem Management
+- **CRUD Operations**: Complete problem lifecycle management
+- **Difficulty Levels**: Easy, Medium, Hard categorization
+- **Rich Descriptions**: Full Markdown support for problem statements
+- **Custom Test Cases**: Flexible input/output validation
+- **Bulk Operations**: Efficient batch processing capabilities
 
-- ✅ Create, read, update, and delete coding problems
-- ✅ Support for multiple difficulty levels (Easy, Medium, Hard)
-- ✅ Rich problem descriptions with Markdown support
-- ✅ Custom test cases for each problem
-- ✅ Search problems by title and filter by difficulty
+### ⚙️ Code Execution Engine
+- **Multi-language Support**: 
+  - 🐍 **Python**: 2-second timeout
+  - ⚡ **C++**: 1-second timeout
+- **Secure Isolation**: Docker containerization with resource limits
+- **Real-time Processing**: Asynchronous evaluation pipeline
+- **Comprehensive Results**: 
+  - ✅ **AC** (Accepted)
+  - ❌ **WA** (Wrong Answer) 
+  - ⏰ **TLE** (Time Limit Exceeded)
+- **Status Tracking**: Real-time submission status updates
 
-### Code Submission & Evaluation
+### 🏗️ Infrastructure
+- **Microservices Architecture**: Independently scalable services
+- **Message Queuing**: Redis with BullMQ for reliable job processing
+- **Container Management**: Automated Docker lifecycle management
+- **Observability**: Winston logging with correlation tracking
+- **Type Safety**: Full TypeScript implementation
+- **Error Handling**: Comprehensive error management across services
 
-- ✅ Multi-language support (Python, C++)
-- ✅ Real-time code execution in secure Docker containers
-- ✅ Automatic test case evaluation with detailed results
-- ✅ Submission status tracking (Pending → Completed)
-- ✅ Test case results: AC (Accepted), WA (Wrong Answer), TLE (Time Limit Exceeded)
+## 🛠️ Tech Stack
 
-### Infrastructure
+### Backend Core
+```
+🚀 Runtime        │ Node.js 18+ with Express.js
+📘 Language       │ TypeScript for type safety
+🗄️ Database       │ MongoDB with Mongoose ODM
+🔄 Message Queue  │ Redis with BullMQ
+🐳 Containerization │ Docker & Docker Compose
+```
 
-- ✅ Scalable microservices architecture
-- ✅ Asynchronous processing with Redis queues using bullmq
-- ✅ Container-based code execution for security
-- ✅ Comprehensive logging using winston and proper error handling
-- ✅ Request correlation tracking across services
+### Development Tools
+```
+📝 Validation     │ Zod schemas
+📊 Logging        │ Winston with structured logging
+🔧 Development    │ Nodemon for hot reloading
+```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Docker
-- Node.js 18+
-- MongoDB
-- Redis
+Ensure you have the following installed:
 
-## 📡 API Endpoints
+- **Docker** & **Docker Compose** (latest)
+- **Node.js** 18+ and **npm**
+- **MongoDB** (local or Atlas)
+- **Redis** server
+
+## 📡 API Documentation
 
 ### Problem Service (Port 3000)
 
-- `POST /api/v1/problems` - Create a new problem
-- `GET /api/v1/problems` - Get all problems
-- `GET /api/v1/problems/:id` - Get problem by ID
-- `PUT /api/v1/problems/:id` - Update problem
-- `DELETE /api/v1/problems/:id` - Delete problem
+#### Problems Management
+```http
+POST   /api/v1/problems           # Create new problem
+GET    /api/v1/problems           # List all problems (with search & filters)
+GET    /api/v1/problems/:id       # Get specific problem
+PUT    /api/v1/problems/:id       # Update problem
+DELETE /api/v1/problems/:id       # Delete problem
+```
+
+**Query Parameters for GET /problems:**
+- `difficulty` - Filter by difficulty (easy|medium|hard)
 
 ### Submission Service (Port 3001)
 
-- `POST /api/v1/submissions` - Submit code for evaluation
-- `GET /api/v1/submissions/:id` - Get submission details
-- `GET /api/v1/submissions/problem/:id` - Get submissions for a problem
+#### Code Submissions
+```http
+POST   /api/v1/submissions           # Submit code for evaluation
+GET    /api/v1/submissions/:id       # Get submission details
+GET    /api/v1/submissions/problem/:id # Get all submissions for a problem
+```
 
 ### Evaluation Service (Port 3002)
 
-- Background worker service that processes submission queue
-- Communicates with Submission Service for status updates
+The Evaluation Service operates as a background worker and doesn't expose HTTP endpoints. It communicates internally with the Submission Service for status updates.
 
-## 🛠️ Technology Stack
+## 💡 Usage Examples
 
-**Backend:**
+### Creating a Problem
 
-- Node.js with Express.js
-- TypeScript for type safety
-- MongoDB with Mongoose ODM
-- Redis for message queuing
-- Docker for containerized code execution
-- Winston for logging
-- Zod for validation
+```bash
+curl -X POST http://localhost:3000/api/v1/problems \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Two Sum",
+    "description": "# Two Sum\n\nGiven an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.\n\n## Example\n```\nInput: nums = [2,7,11,15], target = 9\nOutput: [0,1]\nExplanation: nums[0] + nums[1] = 2 + 7 = 9\n```",
+    "difficulty": "easy",
+    "testCases": [
+      {
+        "input": "[2,7,11,15]\n9",
+        "output": "[0,1]"
+      },
+      {
+        "input": "[3,2,4]\n6", 
+        "output": "[1,2]"
+      }
+    ]
+  }'
+```
 
-**Infrastructure:**
+### Submitting Code
 
-- Docker & Docker Compose
-- BullMQ for job processing
-- Microservices architecture
+```bash
+curl -X POST http://localhost:3001/api/v1/submissions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "problemId": "674a1234567890abcdef1234",
+    "language": "python",
+    "code": "def two_sum(nums, target):\n    num_map = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in num_map:\n            return [num_map[complement], i]\n        num_map[num] = i\n    return []"
+  }'
+```
 
-## 📊 Supported Languages
+### Response Format
 
-- **Python** - 2 second timeout
-- **C++** - 1 second timeout
+```json
+{
+  "success": true,
+  "data": {
+    "submissionId": "674a1234567890abcdef5678",
+    "status": "pending",
+    "message": "Submission queued for evaluation"
+  }
+}
+```
 
-## 📝 Example Usage
+### Running in Development Mode
 
-1. **Create a Problem:**
+```bash
+# Install dependencies
+npm install
 
-   ```bash
-   curl -X POST http://localhost:3000/api/v1/problems \
-     -H "Content-Type: application/json" \
-     -d '{
-       "title": "Two Sum",
-       "description": "Find two numbers that add up to target",
-       "difficulty": "easy",
-       "testCases": [
-         {"input": "[2,7,11,15]\n9", "output": "[0,1]"}
-       ]
-     }'
-   ```
+# Start in development mode
+npm run dev
+```
 
-2. **Submit Code:**
+## 🙏 Acknowledgments
 
-   ```bash
-   curl -X POST http://localhost:3001/api/v1/submissions \
-     -H "Content-Type: application/json" \
-     -d '{
-       "problemId": "problem_id_here",
-       "code": "def two_sum(nums, target): ...",
-       "language": "python"
-     }'
-   ```
-
-## 🏁 Development
-
-- Each service follows clean architecture principles
-- Comprehensive error handling and validation
-- Structured logging with correlation IDs
-- Type-safe development with TypeScript
+- Inspired by LeetCode's problem-solving platform
+- Built with modern Node.js ecosystem
+- Docker containerization for secure execution
+- Redis for reliable message queuing
 
 ---
 
+**Built with ❤️ by [Your Name]**
+
+> ⭐ Star this repo if you find it helpful!
