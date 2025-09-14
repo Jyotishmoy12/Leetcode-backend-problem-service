@@ -1,6 +1,6 @@
-# 🚀 CodeJudge - LeetCode Clone
+# 🚀 LeetCode Backend Clone
 
-> A production-ready, full-stack coding platform that enables users to solve algorithmic problems with real-time code evaluation across multiple programming languages.
+> A production-ready, backend coding platform that enables users to solve algorithmic problems with real-time code evaluation across multiple programming languages.
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
