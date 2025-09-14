@@ -2,7 +2,8 @@
 
 A full-stack coding platform that allows users to solve algorithmic problems and get real-time code evaluation in multiple programming languages.
 
-![System Architecture](./images/design.png)
+![System Architecture] <img width="1078" height="796" alt="design" src="https://github.com/user-attachments/assets/ce239267-63c5-412b-92d2-bfaca3ade153" />
+
 
 ## 🏗️ System Architecture
 
