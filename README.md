@@ -2,18 +2,38 @@
 
 A full-stack coding platform that allows users to solve algorithmic problems and get real-time code evaluation in multiple programming languages.
 
-![System Architecture] <img width="1078" height="796" alt="design" src="https://github.com/user-attachments/assets/ce239267-63c5-412b-92d2-bfaca3ade153" />
+![System Architecture]
+<img width="1078" height="796" alt="design" src="https://github.com/user-attachments/assets/ce239267-63c5-412b-92d2-bfaca3ade153" />
 
 
-## 🏗️ System Architecture
+Here's a better way to write that for GitHub:
 
-The application follows a microservices architecture with the following components:
+## System Architecture
 
-- **Problem Service** - Manages coding problems and test cases
-- **Submission Service** - Handles user submissions and tracks evaluation status
-- **Evaluation Service** - Executes code in isolated Docker containers and evaluates results
-- **MongoDB** - Primary database for problems and submissions
-- **Redis Queue** - Message queue for asynchronous code evaluation
+This system consists of three main services that work together to handle code problem creation, submission, and evaluation:
+
+### Service Flow
+
+1. **Problem Service** - Creates and manages coding problems
+2. **Submission Service** - Handles code submissions from users
+3. **Evaluation Service** - Processes and evaluates submitted code
+
+### Evaluation Pipeline
+
+When a code submission is made, the following process occurs:
+
+1. The **Submission Service** queues the submission using **Redis** for asynchronous processing
+2. The **Evaluation Service** pulls the submission from the Redis queue
+3. Based on the programming language (for our case it's C++ and Python) , the appropriate **Docker image** is pulled
+4. A new **Docker container** is created from the pulled image
+5. The submitted code is executed inside the isolated container environment
+6. Results are processed with proper input output correctness and then returned
+
+### Technology Stack
+
+- **Redis**: Message queue for handling submission requests
+- **Docker**: Containerization for secure code execution
+- **Multi-language support**: Dynamic Docker image selection based on programming language
 
 ## ✨ Features
 
@@ -27,7 +47,7 @@ The application follows a microservices architecture with the following componen
 
 ### Code Submission & Evaluation
 
-- ✅ Multi-language support (Python, C++, Java)
+- ✅ Multi-language support (Python, C++)
 - ✅ Real-time code execution in secure Docker containers
 - ✅ Automatic test case evaluation with detailed results
 - ✅ Submission status tracking (Pending → Completed)
@@ -36,60 +56,19 @@ The application follows a microservices architecture with the following componen
 ### Infrastructure
 
 - ✅ Scalable microservices architecture
-- ✅ Asynchronous processing with Redis queues
+- ✅ Asynchronous processing with Redis queues using bullmq
 - ✅ Container-based code execution for security
-- ✅ Comprehensive logging and error handling
+- ✅ Comprehensive logging using winston and proper error handling
 - ✅ Request correlation tracking across services
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Docker & Docker Compose
+- Docker
 - Node.js 18+
 - MongoDB
 - Redis
-
-### Installation
-
-1. **Clone the repository**
-
-   ```bash
-   git clone <repository-url>
-   cd leetcode
-   ```
-
-2. **Start infrastructure services**
-
-   ```bash
-   docker-compose up -d
-   ```
-
-3. **Install dependencies for all services**
-
-   ```bash
-   # Problem Service
-   cd ProblemService && npm install
-
-   # Submission Service
-   cd ../SubmissionService && npm install
-
-   # Evaluation Service
-   cd ../EvaluationService && npm install
-   ```
-
-4. **Start all services**
-
-   ```bash
-   # Terminal 1 - Problem Service (Port 3000)
-   cd ProblemService && npm run dev
-
-   # Terminal 2 - Submission Service (Port 3001)
-   cd SubmissionService && npm run dev
-
-   # Terminal 3 - Evaluation Service (Port 3002)
-   cd EvaluationService && npm run dev
-   ```
 
 ## 📡 API Endpoints
 
@@ -134,32 +113,6 @@ The application follows a microservices architecture with the following componen
 
 - **Python** - 2 second timeout
 - **C++** - 1 second timeout
-- **Java** - Coming soon
-
-## 🔧 Configuration
-
-Each service uses environment variables for configuration:
-
-```bash
-# Database
-MONGO_URI=mongodb://localhost:27017/leetcode
-
-# Redis
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
-# Service URLs
-PROBLEM_SERVICE_URL=http://localhost:3000
-SUBMISSION_SERVICE_URL=http://localhost:3001
-EVALUATION_SERVICE_URL=http://localhost:3002
-```
-
-## 🐳 Docker Services
-
-The `docker-compose.yml` includes:
-
-- **MongoDB** (Port 27017) - Primary database
-- **Redis** (Port 6379) - Message queue and caching
 
 ## 📝 Example Usage
 
@@ -199,4 +152,3 @@ The `docker-compose.yml` includes:
 
 ---
 
-**Note:** This is a educational project demonstrating microservices architecture, containerized code execution, and real-time evaluation systems.
