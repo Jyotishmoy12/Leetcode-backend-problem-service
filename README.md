@@ -16,8 +16,8 @@ This system consists of three main services that work together to handle code pr
 ### Service Flow
 
 1. **Problem Service** - Creates and manages coding problems
-2. **Submission Service** - Handles code submissions from users
-3. **Evaluation Service** - Processes and evaluates submitted code
+2. **Submission Service** - Handles code submissions from users ( link: https://github.com/Jyotishmoy12/Leetcode-backend-submission-service)
+3. **Evaluation Service** - Processes and evaluates submitted code ( link: https://github.com/Jyotishmoy12/Leetcode-backend-evaluation-service)
 
 ### Evaluation Pipeline
 
