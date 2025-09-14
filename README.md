@@ -7,8 +7,6 @@ A full-stack coding platform that allows users to solve algorithmic problems and
 <img width="1078" height="796" alt="design" src="https://github.com/user-attachments/assets/ce239267-63c5-412b-92d2-bfaca3ade153" />
 
 
-Here's a better way to write that for GitHub:
-
 ## System Architecture
 
 This system consists of three main services that work together to handle code problem creation, submission, and evaluation:
